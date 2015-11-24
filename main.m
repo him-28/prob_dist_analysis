@@ -15,7 +15,8 @@ fields = fieldnames(A);
 for i = 3 : numel(fields) %the first two are gene ID and conds
     [fit_ness_mat] = fit_thresh(A,fields{i},10,'Normal');
     % we call the overall big matrix to be a concatenation of what all it
-    % contains
+    % contains. It is a struct which has each of the genes as one of it's
+    % fields 
     eval(sprintf('overall_fitness_Normal_10(:).%s = fit_ness_mat',fields{i}));
 end
 sprintf('This program took a total of %f seconds',toc)
