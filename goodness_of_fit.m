@@ -13,6 +13,10 @@ if strcmp(dist,'Normal')
 
 %% Gamma Distribution 
 elseif strcmp(dist,'Gamma')
+    if pdf.a == Inf && pdf.b == 0
+        pdf.a = 9;
+        pdf.b = 0.5;
+    end
     Y = gamrnd(pdf.a,pdf.b,1,length(X));
     [~,fit_ness] = kstest2(X,Y,'Alpha',0.05);
 %% Lognormal Distribution

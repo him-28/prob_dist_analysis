@@ -19,6 +19,14 @@ while i ~= size(inds,1)
         %we'll create a data matrix(X) now. This is the one we will use to fit
         %the distribution function
         X = getfield(A,geneID,{i:(i + inds(i,2) - 1)});
+        %%
+        %the following line is for those values in X that are zero. We need
+        %to find them and convert them to a really small non zero value
+        %instead , because the lognormal distribution doesn't take them. We
+        %can comment out these parts for the other distributions (such as 
+        %Gamma and Normal)
+        indices = find(X==0);
+        X(indices) = 0.0001;
         pdf = fitdist(X,dist);
         %% write a function that returns how well the distribution fit the data
         fit_ness  = goodness_of_fit(X,dist,pdf);
