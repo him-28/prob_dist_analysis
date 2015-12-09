@@ -42,50 +42,25 @@ end
 ind_normal = find(auc_nn >= 0.5);
 ind_gamma = find(auc_gn >= 0.5);
 ind_lognormal = find(auc_lnn >= 0.5);
-% figure;
-% %subplot(3,2,1)
+
+%this is to check for instances when one distribution is only margnally
+%better than the other.
+ind_n_mar = find(auc_nn > auc_gn & auc_nn > auc_lnn);
+ind_g_mar = find(auc_gn > auc_nn & auc_gn > auc_lnn);
+ind_ln_mar = find(auc_lnn > auc_nn & auc_lnn > auc_gn);
+
+%sum of all indices for the normalized and thresholded(0.5) case
 sum_length = length(ind_normal) + length(ind_gamma) + length(ind_lognormal);
-% X = [length(ind_normal) length(ind_gamma) length(ind_lognormal)]./sum_length;
-% explode = [1,1,1];
-% pie3(X,explode,{'Normal 27%','Gamma 36%','Lognormal 37%'});
-% title('Portion of genes when one of the distributions fits the data better')
-% 
- figure;
-% %subplot(3,2,2)
+%sum of all indices for the "marginally better" case
+sum_length_mar = length(ind_n_mar) + length(ind_g_mar) + length(ind_ln_mar);
+
+ 
+figure;
 Y = [length(ind_normal) length(ind_gamma) length(ind_lognormal) (length(auc_gamma_10)-sum_length)]./length(auc_gamma_10);
 explode = [1,1,1,1];
-pie3(Y,explode,{'Normal 5','Gamma 0','Lognormal 6','Equal Scores 4085'});
-% title('Portion of genes explained by each distribution including the genes for which they gave equal scores')
-% 
-% %% What is the confidence when each of them is chosen as the best fit?
-% % we'll learn that through histograms 
-% figure;
-% %subplot(3,2,3)
-% hist(auc_normal_10(ind_normal),20)
-% title('Scores when Normal was the best fit')
-% 
-% figure;
-% %subplot(3,2,4)
-% hist(auc_gamma_10(ind_gamma),20)
-% title('Scores when Gamma was the best fit')
-% 
-% figure;
-% %subplot(3,2,5)
-% hist(auc_lognormal_10(ind_lognormal),20)
-% title('Scores when Lognormal was the best fit')
-% 
-% %% Find a few examples where each of the distributions were best fitting
-% figure;
-% %subplot(1,3,1)
-% eval(sprintf('hist(overall_fitness_Normal_10(:).%s)',fields{find(auc_normal_10==1)}));
-% title('Best fitting normal example')
-% 
-% figure;
-% %subplot(1,3,2)
-% eval(sprintf('hist(overall_fitness_Gamma_10(:).%s)',fields{find(auc_gamma_10==max(auc_gamma_10))}));
-% title('Best fitting Gamma example')
-% 
-% figure;
-% %subplot(1,3,3)
-% eval(sprintf('hist(overall_fitness_Lognormal_10(:).%s)',fields{find(auc_lognormal_10==max(auc_lognormal_10))}));
-% title('Best fitting Lognormal example')
+pie3(Y,explode,{'Normal 5','Gamma 0','Lognormal 6','Other 4085'});
+
+figure; 
+Y = [length(ind_n_mar) length(ind_g_mar) length(ind_ln_mar) (length(auc_gamma_10)-sum_length)]./length(auc_gamma_10);
+explode = [1,1,1,1];
+pie3(Y,explode,{'Normal 24%','Gamma 36%','Lognormal 38%','Other 2%'});
