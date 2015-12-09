@@ -58,9 +58,9 @@ sum_length_mar = length(ind_n_mar) + length(ind_g_mar) + length(ind_ln_mar);
 figure;
 Y = [length(ind_normal) length(ind_gamma) length(ind_lognormal) (length(auc_gamma_10)-sum_length)]./length(auc_gamma_10);
 explode = [1,1,1,1];
-pie3(Y,explode,{'Normal 5','Gamma 0','Lognormal 6','Other 4085'});
+pie3(Y,explode,{'Normal (0.1%)5','Gamma (0%)0','Lognormal (0.2%)6','Other (99.7%)4085'});
 
 figure; 
 Y = [length(ind_n_mar) length(ind_g_mar) length(ind_ln_mar) (length(auc_gamma_10)-sum_length)]./length(auc_gamma_10);
 explode = [1,1,1,1];
-pie3(Y,explode,{'Normal 24%','Gamma 36%','Lognormal 38%','Other 2%'});
+pie3(Y,explode,{'Normal (24%)1011','Gamma (36%)1471','Lognormal (38%)1561','Other (2%)53'});
